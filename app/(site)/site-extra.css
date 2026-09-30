@@ -1,0 +1,5 @@
+/* Additions for the online version (kept apart so the maquette CSS can be re-imported). */
+.hp{position:absolute!important;left:-10000px;width:1px;height:1px;overflow:hidden}
+.fp-form .notice.ok{border-color:rgba(216,201,168,.6)}
+.fp-form .notice.ko{border-color:rgba(227,169,147,.7)}
+.fp-form button[aria-busy=true]{opacity:.6;cursor:progress}
