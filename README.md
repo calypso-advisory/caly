@@ -3,7 +3,7 @@
 Site public (Next.js, rendu côté serveur, une vraie adresse par page) et tableau de bord d'administration des demandes reçues par le formulaire « Faire le point ».
 
 - **Site** : `/`, `/audits`, `/cockpit`, `/approche`, `/professionnels`, `/cabinet`, `/faire-le-point`, `/mentions-legales`. Mêmes pages et mêmes animations que la maquette validée.
-- **Formulaire** : les demandes sont enregistrées dans Supabase (base hébergée en Europe). Une alerte e-mail peut partir à chaque demande. L'e-mail ne contient aucun détail confidentiel, seulement le nom, la société et un lien vers le tableau de bord.
+- **Formulaire** : les demandes sont enregistrées dans Supabase (base hébergée à Londres). Une alerte e-mail peut partir à chaque demande. L'e-mail ne contient aucun détail confidentiel, seulement le nom, la société et un lien vers le tableau de bord.
 - **Tableau de bord** : `/admin`, protégé par identifiant et réservé aux adresses listées dans `ADMIN_EMAILS`. On y trouve la liste des demandes, la recherche, le statut (Nouvelle, En cours, Traitée, Archivée), les notes internes, la suppression et l'export CSV (lisible dans Excel).
 - **Référencement** : titres et descriptions par page, `sitemap.xml`, `robots.txt`. `/admin` n'est jamais indexé.
 
@@ -11,11 +11,14 @@ Site public (Next.js, rendu côté serveur, une vraie adresse par page) et table
 
 ### 1. Supabase (base de données et comptes)
 
-1. Créer un compte sur supabase.com, puis **New project**. Choisir la région **Europe (Paris ou Frankfurt)**.
-2. **SQL Editor**, puis **New query**. Coller le contenu de `supabase/migrations/0001_demandes.sql`, puis **Run**.
-3. **Authentication**, puis **Users**, puis **Add user**. Saisir votre e-mail et un mot de passe solide, et cocher « Auto confirm ». Répéter pour chaque associé qui doit accéder au tableau de bord.
-4. **Authentication**, puis **Sign In / Providers**. Désactiver **Allow new users to sign up** : personne d'autre ne pourra créer de compte.
-5. **Project Settings**, puis **API**. Noter l'URL du projet, la clé `anon` et la clé `service_role`. La clé `service_role` est secrète : elle ne va que dans Vercel, jamais ailleurs.
+La base est en place dans le projet « Calypso Project » (région Londres) : la table des demandes, la table des administrateurs et les règles d'accès. Le script est dans `supabase/migrations/0001_demandes.sql`.
+
+Sécurité : le site public ne peut que déposer une demande, via une fonction contrôlée qui vérifie les champs et limite les envois. Il ne peut en lire aucune. Seuls les comptes connectés et inscrits dans la table `admins` voient les demandes : c'est la base elle-même qui l'impose. Aucune clé secrète n'est nécessaire côté site.
+
+Pour donner accès au tableau de bord à une personne :
+1. **Authentication**, puis **Users**, puis **Add user** : saisir son e-mail et un mot de passe, et cocher « Auto confirm ».
+2. **SQL Editor** : `insert into public.admins (email) values ('prenom@domaine.fr');`
+3. Recommandé : **Authentication**, puis **Sign In / Providers**, puis désactiver **Allow new users to sign up**.
 
 ### 2. GitHub (le code)
 
@@ -31,13 +34,12 @@ Site public (Next.js, rendu côté serveur, une vraie adresse par page) et table
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | l'adresse définitive, par ex. `https://www.calypso-advisory.com` |
 | `NEXT_PUBLIC_SUPABASE_URL` | l'URL du projet Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | la clé `anon` |
-| `SUPABASE_SERVICE_ROLE_KEY` | la clé `service_role` (secrète) |
-| `ADMIN_EMAILS` | les e-mails autorisés, séparés par des virgules |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | la clé publique `anon` |
+| `ADMIN_EMAILS` | facultatif, verrou supplémentaire |
 | `RESEND_API_KEY`, `ALERT_EMAIL_TO`, `ALERT_EMAIL_FROM` | facultatif, pour l'alerte e-mail (étape 5) |
 
 3. Cliquer sur **Deploy**. Le site est en ligne sur une adresse `…vercel.app` en une à deux minutes.
-4. Recommandé : dans **Settings → Functions**, choisir la région **Paris (cdg1)** pour que les données restent en Europe.
+4. Les fonctions serveur tournent à Londres (`vercel.json`), au plus près de la base.
 
 ### 4. Nom de domaine
 

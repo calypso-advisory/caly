@@ -3,20 +3,23 @@ import { redirect } from 'next/navigation';
 import { sessionClient } from './supabase/server';
 
 export function supabaseConfigured() {
-  return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 }
 
-export function isAllowed(email?: string | null) {
+/* Optional extra lock: if ADMIN_EMAILS is set, the account must also be listed there. */
+function envAllows(email?: string | null) {
   const list = (process.env.ADMIN_EMAILS || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
-  return !!email && list.includes(email.toLowerCase());
+  return list.length === 0 || (!!email && list.includes(email.toLowerCase()));
 }
 
-/* Every admin page and action calls this: signed in AND on the allow-list, otherwise back to the login page. */
+/* Every admin page and action calls this. Access is granted by the database itself
+   (table "admins", checked by row-level security), so the returned client only sees what an admin may see. */
 export async function requireAdmin() {
   if (!supabaseConfigured()) redirect('/admin/login?e=config');
   const supabase = await sessionClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) redirect('/admin/login');
-  if (!isAllowed(data.user.email)) redirect('/admin/login?e=forbidden');
-  return data.user;
+  const { data: ok } = await supabase.rpc('is_admin');
+  if (ok !== true || !envAllows(data.user.email)) redirect('/admin/login?e=forbidden');
+  return { user: data.user, db: supabase };
 }

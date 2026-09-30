@@ -1,5 +1,4 @@
 import { requireAdmin } from '@/lib/auth';
-import { adminClient } from '@/lib/supabase/admin';
 import { STATUTS, statutLabel, type Demande } from '@/lib/demandes';
 import Header from './Header';
 
@@ -8,9 +7,8 @@ export const dynamic = 'force-dynamic';
 const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Europe/Paris' });
 
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ statut?: string; q?: string; deleted?: string }> }) {
-  const user = await requireAdmin();
+  const { user, db } = await requireAdmin();
   const { statut, q, deleted } = await searchParams;
-  const db = adminClient()!;
 
   let query = db.from('demandes').select('id, created_at, nom, societe, email, situation, statut').order('created_at', { ascending: false }).limit(300);
   if (statut && STATUTS.some((s) => s.id === statut)) query = query.eq('statut', statut);

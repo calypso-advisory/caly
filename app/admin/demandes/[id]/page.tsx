@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { requireAdmin } from '@/lib/auth';
-import { adminClient } from '@/lib/supabase/admin';
 import { STATUTS, type Demande } from '@/lib/demandes';
 import { updateDemande, deleteDemande } from '../../actions';
 import Header from '../../Header';
@@ -11,10 +10,10 @@ export const dynamic = 'force-dynamic';
 const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full', timeStyle: 'short', timeZone: 'Europe/Paris' });
 
 export default async function DemandePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ saved?: string }> }) {
-  const user = await requireAdmin();
+  const { user, db } = await requireAdmin();
   const { id } = await params; const { saved } = await searchParams;
   if (!/^[0-9a-f-]{36}$/.test(id)) notFound();
-  const { data } = await adminClient()!.from('demandes').select('*').eq('id', id).single();
+  const { data } = await db.from('demandes').select('*').eq('id', id).single();
   if (!data) notFound();
   const d = data as Demande;
   const subject = encodeURIComponent('Votre demande auprès de Calypso Advisory');
