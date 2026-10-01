@@ -32,7 +32,7 @@ Pour donner accès au tableau de bord à une personne :
 
 | Variable | Valeur |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | l'adresse définitive, par ex. `https://www.calypso-advisory.com` |
+| `NEXT_PUBLIC_SITE_URL` | l'adresse définitive, par ex. `https://calypso-advisory.com` |
 | `NEXT_PUBLIC_SUPABASE_URL` | l'URL du projet Supabase |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | la clé publique `anon` |
 | `ADMIN_EMAILS` | facultatif, verrou supplémentaire |
