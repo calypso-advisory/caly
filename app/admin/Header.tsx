@@ -6,6 +6,7 @@ export default function Header({ email }: { email?: string | null }) {
       <a className="adm-brand" href="/admin"><b>CALYPSO</b><i>ADVISORY</i></a>
       <nav>
         <a href="/admin">Demandes</a>
+        <a href="/admin/pages">Pages et référencement</a>
         <a href="/admin/export">Exporter (CSV)</a>
         <a href="/" target="_blank" rel="noreferrer">Voir le site</a>
       </nav>

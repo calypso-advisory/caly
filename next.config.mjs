@@ -10,6 +10,8 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: { serverActions: { bodySizeLimit: '4.5mb' } },
+  images: { remotePatterns: [{ protocol: 'https', hostname: '*.supabase.co' }] },
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders },

@@ -1,6 +1,8 @@
 import StaticPage, { metaFor } from '../StaticPage';
 
-export const metadata = metaFor('cabinet');
+export async function generateMetadata() {
+  return metaFor('cabinet');
+}
 
 export default function Page() {
   return <StaticPage id="cabinet" />;
