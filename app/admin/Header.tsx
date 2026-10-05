@@ -3,7 +3,11 @@ import { signOut } from './actions';
 export default function Header({ email }: { email?: string | null }) {
   return (
     <header className="adm-top">
-      <a className="adm-brand" href="/admin"><b>CALYPSO</b><i>ADVISORY</i></a>
+      <a className="adm-home" href="/admin">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/mark.png" alt="" width={36} height={36} />
+        <span className="adm-brand"><b>CALYPSO</b><i>ADVISORY</i></span>
+      </a>
       <nav>
         <a href="/admin">Demandes</a>
         <a href="/admin/pages">Pages et référencement</a>

@@ -70,6 +70,7 @@ Envoyer une demande depuis `/faire-le-point`, puis ouvrir `/admin` et se connect
 - **Travailler en local** : `npm install`, copier `.env.example` en `.env.local`, puis `npm run dev`.
 - **Chaque modification** poussée sur GitHub est déployée automatiquement par Vercel. Chaque branche obtient sa propre adresse de prévisualisation.
 - **Réimporter la maquette** : les pages publiques sont générées depuis la maquette HTML validée, avec `python3 scripts/import-maquette.py chemin/vers/calypso-site.html`. Cette commande régénère `content/fragments.ts`, `app/(site)/site.css` et `public/legacy/site.js`. Les ajouts propres à la version en ligne sont dans `app/(site)/site-extra.css`.
+- **Logo** : l'icône est un objet en trois dimensions (plaques d'or, de verre, de laque et de nacre) décrit dans `brand/icone.html`. Le site n'en affiche que des images déjà calculées : une bande de 31 vues inclinées pour l'en-tête et le pied de page (`public/brand/mark-sprite.webp`, animée au défilement par `app/(site)/MarkMotion.tsx`), les icônes d'application et l'image de partage. Pour les recalculer après une retouche : `node brand/render.js` (voir l'en-tête du fichier).
 - **Pistes suivantes** : articles et actualités gérés depuis `/admin`, prise de rendez-vous, espace client sécurisé pour l'échange de documents, lien avec Notariact.
 
 ## Structure
@@ -82,6 +83,8 @@ content/              contenu des pages (généré) et métadonnées SEO
 lib/                  accès Supabase et contrôle d'accès
 public/legacy/site.js animations (issues de la maquette)
 public/vendor/        three.js r128 (licence MIT), hébergé avec le site
+public/brand/         images du logo (bande animée au défilement, logo fixe)
+brand/                source du logo en 3D et script de rendu des images
 supabase/migrations/  schéma de la base
 middleware.ts         protection de /admin
 ```

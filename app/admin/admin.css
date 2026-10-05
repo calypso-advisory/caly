@@ -4,6 +4,8 @@ body{margin:0;background:var(--abyss);color:var(--ink);font:15px/1.6 Manrope,-ap
 a{color:inherit}
 h1,h2{font-family:"EB Garamond",Georgia,serif;font-weight:500;margin:0}
 .adm{min-height:100vh}
+.adm-home{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+.adm-home img{display:block;margin-left:-6px}
 .adm-brand{display:flex;flex-direction:column;gap:3px;text-decoration:none;line-height:1}
 .adm-brand b{font-family:"EB Garamond",Georgia,serif;font-weight:500;font-size:19px;letter-spacing:.3em}
 .adm-brand i{font-style:normal;font-size:8px;font-weight:600;letter-spacing:.6em;color:var(--sand)}

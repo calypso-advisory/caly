@@ -3,3 +3,7 @@
 .fp-form .notice.ok{border-color:rgba(216,201,168,.6)}
 .fp-form .notice.ko{border-color:rgba(227,169,147,.7)}
 .fp-form button[aria-busy=true]{opacity:.6;cursor:progress}
+
+/* Brand mark: one frame of the rendered strip (8 columns by 4 rows); the middle frame, face on, is the resting one. */
+.mark{flex:none;display:block;width:46px;height:46px;margin:-6px -4px -6px -8px;background:url(/brand/mark-sprite.webp) 100% 33.333%/800% 400% no-repeat}
+.foot .mark{width:44px;height:44px;margin:-4px -2px -4px -6px}

@@ -10,7 +10,11 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
   return (
     <main className="adm-login">
       <div className="adm-login-box">
-        <div className="adm-brand"><b>CALYPSO</b><i>ADVISORY</i></div>
+        <div className="adm-home">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/mark.png" alt="" width={44} height={44} />
+          <span className="adm-brand"><b>CALYPSO</b><i>ADVISORY</i></span>
+        </div>
         <h1>Tableau de bord</h1>
         {e && MSG[e] ? <p className="adm-alert">{MSG[e]}</p> : null}
         {e !== 'config' ? <LoginForm /> : null}
