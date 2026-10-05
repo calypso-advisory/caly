@@ -162,9 +162,9 @@
         .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
         .then(function(res){
           if(res.ok){ form.reset(); say('Merci. Votre demande nous est bien parvenue. Un membre de l\'équipe revient vers vous sous 24 heures ouvrées.', true); }
-          else say(res.j && res.j.error === 'invalid' ? 'Certains champs ne sont pas valides. Vérifiez votre nom et votre adresse e-mail.' : 'L\'envoi n\'a pas abouti. Vous pouvez réessayer dans un instant, ou écrire directement à contact@calypso-advisory.com.', false);
+          else say(res.j && res.j.error === 'invalid' ? 'Certains champs ne sont pas valides. Vérifiez votre nom et votre adresse e-mail.' : 'L\'envoi n\'a pas abouti. Vous pouvez réessayer dans un instant, ou écrire directement à audit@calypso-advisory.com.', false);
         })
-        .catch(function(){ say('L\'envoi n\'a pas abouti. Vérifiez votre connexion, ou écrivez directement à contact@calypso-advisory.com.', false); })
+        .catch(function(){ say('L\'envoi n\'a pas abouti. Vérifiez votre connexion, ou écrivez directement à audit@calypso-advisory.com.', false); })
         .then(function(){ busy = false; btn.removeAttribute('aria-busy'); btn.disabled = false; });
     });
   })();

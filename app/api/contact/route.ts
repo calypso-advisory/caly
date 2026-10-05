@@ -7,6 +7,16 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function clean(v: unknown, max: number) { return typeof v === 'string' ? v.replace(/\u0000/g, '').trim().slice(0, max) : ''; }
 function esc(s: string) { return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string)); }
 
+/* Health check (no data written): confirms the site can reach the database and that the
+   controlled function answers. It sends a deliberately invalid request and expects the "invalid" refusal. */
+export async function GET() {
+  const db = anonClient();
+  if (!db) return NextResponse.json({ ok: false, step: 'configuration' }, { status: 503 });
+  const { error } = await db.rpc('submit_demande', { p_nom: '', p_email: '' });
+  const ok = !!error && error.code === '22023';
+  return NextResponse.json({ ok, database: ok ? 'reachable' : 'unexpected', detail: ok ? undefined : error?.code || 'no_error' }, { status: ok ? 200 : 502, headers: { 'Cache-Control': 'no-store' } });
+}
+
 export async function POST(req: Request) {
   let body: Record<string, unknown>;
   try { body = await req.json(); } catch { return NextResponse.json({ error: 'invalid' }, { status: 400 }); }
