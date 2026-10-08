@@ -8,7 +8,15 @@ export const metadata: Metadata = {
   description: "Calypso Advisory accompagne les dirigeants d'entreprises en difficulté : audit, orientation et pilotage de la trajectoire.",
   openGraph: { type: 'website', locale: 'fr_FR', siteName: 'Calypso Advisory' },
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }, { url: '/icon-192.png', sizes: '192x192', type: 'image/png' }, { url: '/icon-512.png', sizes: '512x512', type: 'image/png' }],
+    /* tab icon: the rendered mark on its round night ground; 192 and 512 are the app icon on its plate */
+    icon: [
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48', type: 'image/x-icon' },
+      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon-96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' }
+    ],
     apple: '/apple-icon.png'
   }
 };
