@@ -47,3 +47,82 @@
 
 /* Mode test (?test=1) */
 .lp-test{position:fixed;z-index:70;left:50%;top:calc(env(safe-area-inset-top,0px) + 92px);transform:translateX(-50%);max-width:min(92vw,560px);padding:10px 16px;border-radius:12px;border:1px solid var(--sand);background:rgba(8,22,31,.9);color:var(--sand);font-size:13px;text-align:center}
+
+/* ===== « La passe » : hero et scène de /rj =====
+   Une seule image, épinglée, que le défilement pilote (public/legacy/landing-scenes.js).
+   Sans script, sans WebGL ou en mouvement réduit, la page reste ordinaire : le hero, puis les trois temps
+   l'un sous l'autre. La mise en page épinglée (.live) n'est posée que lorsque le dessin existe. */
+.pz{position:relative;background:var(--abyss);color:var(--on-dark)}
+.pz::after{content:"";position:absolute;left:0;right:0;bottom:0;z-index:2;height:1px;background:linear-gradient(90deg,transparent,rgba(216,201,168,.26) 30%,rgba(216,201,168,.26) 70%,transparent)}
+.pz-stage{position:absolute;left:0;right:0;top:0;height:100vh;height:100svh;background:radial-gradient(120% 90% at 64% 62%,#10293B 0%,#0A1B28 46%,#08161F 100%)}
+.pz-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pz-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,22,31,.97) 0%,rgba(8,22,31,.9) 30%,rgba(8,22,31,0) 56%)}
+/* la bande sombre qui suit garde sa lumière d'ambiance jusqu'au filet, sans bord visible */
+.pz + .band .orbs{overflow:visible}
+.pz-stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;pointer-events:none;background:linear-gradient(180deg,rgba(8,22,31,0),var(--abyss))}
+.pz-labels{display:none}
+.pz-hero{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:clamp(104px,14vh,150px) clamp(56px,9vh,104px)}
+.pz-hero .wrap{width:100%}
+.pz-hero .stack-lg{gap:clamp(18px,3.4vh,38px)}
+.pz-hero h1{font-size:clamp(40px,min(6.4vw,11.6vh),92px);line-height:1;color:var(--on-dark);max-width:16ch;letter-spacing:-.02em}
+.pz-hero .sub{font-family:var(--display);font-style:italic;font-size:clamp(22px,min(2.6vw,4.4vh),34px);color:var(--sand)}
+.pz-hero .lead{max-width:54ch;color:var(--on-dark-2)}
+.pz-hero .actions{margin-top:4px}
+.pz-anchor{position:absolute;left:0;top:108vh;width:1px;height:1px;pointer-events:none}
+#reperes.pz-anchor{scroll-margin-top:0}
+.pz-beats{position:relative;z-index:2;padding-block:8px clamp(72px,9vw,120px)}
+.pz-col{display:flex;flex-direction:column;gap:28px;max-width:760px}
+.pz-title{display:flex;flex-direction:column;gap:16px}
+.pz .eyebrow{color:var(--sand)}
+.pz-h{font-family:var(--display);font-weight:500;font-size:clamp(30px,3.1vw,44px);line-height:1.06;letter-spacing:-.01em;color:var(--on-dark)}
+.pz-slot{display:flex;flex-direction:column;gap:14px}
+.pz-slot .sk-card .btn{align-self:flex-start;margin-top:10px}
+.pz-slot .pz-lead-m{display:none}
+.pz-line{display:flex;flex-direction:column;gap:18px}
+.pz-line .lead{font-size:16px;max-width:38ch;color:var(--on-dark-2)}
+
+.pz.live{height:640vh}
+.pz.live .pz-in{position:sticky;top:0;z-index:1;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(120% 90% at 64% 62%,#10293B 0%,#0A1B28 46%,#08161F 100%)}
+.pz.live .pz-stage{inset:0;height:auto;background:none}
+.pz.live .pz-stage::after{height:13%;background:linear-gradient(180deg,rgba(8,22,31,0),rgba(8,22,31,.92))}
+.pz.live .pz-hero{position:absolute;left:0;right:0;top:0;z-index:3}
+.pz.live .pz-labels{display:block;position:absolute;inset:0;pointer-events:none}
+.pz-lab{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font:600 11px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--on-dark);text-shadow:0 0 16px rgba(8,22,31,.95),0 0 4px rgba(8,22,31,.9);will-change:transform,opacity}
+.pz-lab.sand{color:var(--sand)}
+.pz.live .pz-beats{position:absolute;inset:0;z-index:3;display:flex;align-items:center;padding:clamp(96px,12vh,128px) 0 clamp(28px,5vh,56px);pointer-events:none}
+.pz.live .pz-beats .wrap{width:100%}
+.pz.live .pz-col{width:min(460px,100%);max-width:none;gap:24px}
+.pz.live .pz-title,.pz.live .pz-slot>*{opacity:0;transform:translate3d(0,20px,0);transition:opacity .9s var(--ease),transform 1.1s var(--ease);pointer-events:none}
+.pz.live .pz-title.on,.pz.live .pz-slot>.on{opacity:1;transform:none;pointer-events:auto}
+.pz.live .pz-slot{display:grid}
+.pz.live .pz-slot>*{grid-area:1/1;align-self:start}
+
+@media (max-width:720px),(max-width:1100px) and (orientation:portrait){
+  .pz-veil{background:linear-gradient(180deg,rgba(8,22,31,.94) 0%,rgba(8,22,31,.76) 32%,rgba(8,22,31,0) 58%)}
+  .pz-hero{justify-content:flex-start;padding-block:104px 26px}
+  .pz-hero h1{font-size:clamp(36px,10.4vw,76px)}
+  .pz-hero .sub{font-size:clamp(22px,4.6vw,34px)}
+  .pz-hero .scroll-cue{display:none}
+  .pz-h{font-size:clamp(28px,5.4vw,44px);max-width:none}
+  /* sur téléphone, le premier écran garde le titre en haut et le bouton en bas, la passe entre les deux ;
+     le texte d'introduction vient juste après, dès que l'on commence à faire défiler */
+  .pz.live .pz-hero .wrap{flex:1;display:flex;flex-direction:column}
+  .pz.live .pz-hero .wrap>.stack{margin-top:auto}
+  .pz.live .pz-hero .lead,.pz.live .pz-hero .link{display:none}
+  .pz.live .pz-hero .micro{text-shadow:0 0 12px rgba(8,22,31,.95)}
+  .pz.live .pz-slot .pz-lead-m{display:block}
+  .pz.live .pz-beats{display:block;padding:0}
+  .pz.live .pz-beats .wrap{position:static}
+  .pz.live .pz-col{position:absolute;inset:0;width:auto;display:block}
+  .pz.live .pz-title{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(env(safe-area-inset-top,0px) + 98px);gap:10px}
+  .pz.live .pz-slot{position:absolute;left:var(--gutter);right:var(--gutter);bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+  .pz.live .pz-slot>*{align-self:end}
+  .pz.live .pz-slot .sk-card,.pz.live .pz-line,.pz.live .pz-lead-m{padding:18px 20px;background:rgba(9,24,35,.9);border:1px solid rgba(216,201,168,.2);border-radius:3px}
+  .pz.live .pz-line{gap:10px}
+  .pz.live .pz-line .lead,.pz.live .pz-lead-m{font-size:14.5px;line-height:1.6;color:var(--on-dark-2)}
+  .pz.live .pz-slot .sk-card p{font-size:14px}
+  .pz-wide{display:none}
+}
+@media (max-width:720px){
+  .pz-lab{font-size:9.5px;letter-spacing:.18em}
+}

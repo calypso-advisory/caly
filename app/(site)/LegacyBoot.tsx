@@ -14,12 +14,14 @@ function load(src: string) {
   });
 }
 
-export default function LegacyBoot() {
+/* extra: scripts loaded after the scene script, in order (the campaign pages add their own scenes this way). */
+export default function LegacyBoot({ extra = [] }: { extra?: string[] }) {
   useEffect(() => {
     const w = window as unknown as { __calypsoBooted?: boolean; THREE?: unknown };
     if (w.__calypsoBooted) return;
     w.__calypsoBooted = true;
-    (w.THREE ? Promise.resolve() : load(THREE_SRC)).then(() => load('/legacy/site.js'));
+    extra.reduce((p, src) => p.then(() => load(src)), (w.THREE ? Promise.resolve() : load(THREE_SRC)).then(() => load('/legacy/site.js')));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return null;
 }

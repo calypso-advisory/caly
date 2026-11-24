@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 import { notFound } from 'next/navigation';
 import { landings, landingById, COMMON } from '@/content/landings';
 import LandingForm from '../LandingForm';
+import PasseScene from '../PasseScene';
 import { EDITEUR } from '@/content/legal';
 
 /* Une page par campagne, générée depuis content/landings.ts.
@@ -33,6 +34,8 @@ export default async function Page({ params }: Props) {
 
   return (
     <main data-page={'lp-' + l.id} data-landing={l.id} data-campagne={l.campagne}>
+      {/* une page qui a sa propre scène la reçoit à la place du hero, des deux panneaux et de la bande de cartes */}
+      {l.scene3d === 'passe' ? <PasseScene l={l} /> : (<>
       <section className="phero dk fp-hero lp-hero">
         <canvas className="fp-chart" id="fpChart" aria-hidden="true"></canvas>
         <div className="wrap stack-lg">
@@ -82,6 +85,7 @@ export default async function Page({ params }: Props) {
           {id.note && <p className="lead" data-reveal="">{id.note}</p>}
         </div>
       </section>
+      </>)}
 
       <section className="band dk">
         <div className="orbs" data-speed="0.2"><span></span><span></span><span></span></div>

@@ -8,6 +8,7 @@ import Measure from './Measure';
 /* Pages de campagne : même matière que le site (mêmes feuilles de style, mêmes animations),
    avec un en-tête réduit au logo et à un seul bouton, et un pied de page court.
    Les identifiants progress, hdrShell, menuBtn et nav sont conservés : le script du site les attend. */
+const SCENES = ['/legacy/landing-scenes.js']; /* scènes propres aux pages de campagne */
 const animFlag = "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('anim')}catch(e){}";
 
 export default function LandingLayout({ children }: { children: React.ReactNode }) {
@@ -47,7 +48,7 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
           <div className="foot-base"><span>© 2026 Calypso Advisory. Tous droits réservés.</span><span>Paris</span></div>
         </div>
       </footer>
-      <LegacyBoot />
+      <LegacyBoot extra={SCENES} />
       <MarkMotion />
       <Measure />
     </>

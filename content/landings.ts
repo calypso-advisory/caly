@@ -19,6 +19,7 @@ export type Landing = {
   identify: { eyebrow: string; h2: string; cols: 2 | 3; cards: LandingCard[]; note?: string };
   first: { points: string[]; aside: string };
   origin: string;          /* première phrase de la notice « Pourquoi ce message » */
+  scene3d?: 'passe';       /* scène propre à la page : elle remplace le hero, les deux panneaux et la bande de cartes */
 };
 
 export const SITUATIONS: { value: string; label: string }[] = [
@@ -83,7 +84,8 @@ export const landings: Landing[] = [
       ]
     },
     first: { points: RJ_POINTS, aside: RJ_ASIDE },
-    origin: RJ_ORIGIN
+    origin: RJ_ORIGIN,
+    scene3d: 'passe'
   },
   {
     id: 'options', campagne: 'sms-rj-b', canal: 'sms', situation: 'Sauvegarde ou redressement',
