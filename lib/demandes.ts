@@ -15,7 +15,9 @@ export const SITUATIONS = [
 export type Demande = {
   id: string; created_at: string; updated_at: string;
   situation: string | null; message: string | null; nom: string; societe: string | null;
-  email: string; telephone: string | null; statut: Statut; notes: string | null;
+  email: string | null; telephone: string | null; statut: Statut; notes: string | null;
+  origine?: string; campagne?: string | null; landing?: string | null; siren?: string | null;
+  attribution?: Record<string, string> | null; est_test?: boolean;
 };
 
 export function statutLabel(s: string) { return STATUTS.find((x) => x.id === s)?.label || s; }

@@ -8,8 +8,8 @@ function cell(v: unknown) { const s = v == null ? '' : String(v); return '"' + s
 export async function GET() {
   const { db } = await requireAdmin();
   const { data } = await db.from('demandes').select('*').order('created_at', { ascending: false });
-  const head = ['Reçue le', 'Nom', 'Société', 'E-mail', 'Téléphone', 'Situation', 'Message', 'Statut', 'Notes'];
-  const lines = (data || []).map((d) => [d.created_at, d.nom, d.societe, d.email, d.telephone, d.situation, d.message, statutLabel(d.statut), d.notes].map(cell).join(';'));
+  const head = ['Reçue le', 'Nom', 'Société', 'E-mail', 'Téléphone', 'Situation', 'Message', 'Statut', 'Notes', 'Origine', 'Campagne', 'Page', 'SIREN', 'Test', 'Source', 'Support'];
+  const lines = (data || []).map((d) => [d.created_at, d.nom, d.societe, d.email, d.telephone, d.situation, d.message, statutLabel(d.statut), d.notes, d.origine, d.campagne, d.landing, d.siren, d.est_test ? 'oui' : '', d.attribution?.utm_source, d.attribution?.utm_medium].map(cell).join(';'));
   const csv = '﻿' + [head.map(cell).join(';'), ...lines].join('\r\n');
   return new Response(csv, { headers: { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="demandes-calypso-${new Date().toISOString().slice(0, 10)}.csv"`, 'Cache-Control': 'no-store' } });
 }

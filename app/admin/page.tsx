@@ -10,7 +10,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const { user, db } = await requireAdmin();
   const { statut, q, deleted } = await searchParams;
 
-  let query = db.from('demandes').select('id, created_at, nom, societe, email, situation, statut').order('created_at', { ascending: false }).limit(300);
+  let query = db.from('demandes').select('*').order('created_at', { ascending: false }).limit(300);
   if (statut && STATUTS.some((s) => s.id === statut)) query = query.eq('statut', statut);
   else query = query.neq('statut', 'archive');
   const term = (q || '').trim().replace(/[%,()]/g, ' ').slice(0, 80);
@@ -23,7 +23,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     counts[s.id] = count || 0;
   }));
 
-  const list = (rows || []) as Pick<Demande, 'id' | 'created_at' | 'nom' | 'societe' | 'email' | 'situation' | 'statut'>[];
+  const list = (rows || []) as Demande[];
   return (
     <>
       <Header email={user.email} />
@@ -55,7 +55,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
               {list.map((d) => (
                 <tr key={d.id}>
                   <td>{fmt.format(new Date(d.created_at))}</td>
-                  <td><a href={`/admin/demandes/${d.id}`}><strong>{d.nom}</strong></a><br /><span className="adm-mute">{d.email}</span></td>
+                  <td><a href={`/admin/demandes/${d.id}`}><strong>{d.nom}</strong></a><br /><span className="adm-mute">{d.email || d.telephone}</span>{d.campagne ? <><br /><span className="adm-mute">Campagne : {d.campagne}{d.est_test ? ' (test)' : ''}</span></> : null}</td>
                   <td>{d.societe || <span className="adm-mute">—</span>}</td>
                   <td>{d.situation || <span className="adm-mute">Non précisée</span>}</td>
                   <td><span className={'adm-tag t-' + d.statut}>{statutLabel(d.statut)}</span></td>

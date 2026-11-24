@@ -32,9 +32,12 @@ export default async function DemandePage({ params, searchParams }: { params: Pr
             <dl>
               <dt>Nom</dt><dd>{d.nom}</dd>
               <dt>Société</dt><dd>{d.societe || '—'}</dd>
-              <dt>E-mail</dt><dd><a href={`mailto:${d.email}?subject=${subject}`}>{d.email}</a></dd>
+              <dt>E-mail</dt><dd>{d.email ? <a href={`mailto:${d.email}?subject=${subject}`}>{d.email}</a> : 'Non renseigné'}</dd>
               <dt>Téléphone</dt><dd>{d.telephone ? <a href={`tel:${d.telephone.replace(/\s/g, '')}`}>{d.telephone}</a> : '—'}</dd>
               <dt>Situation</dt><dd>{d.situation || 'Non précisée'}</dd>
+              {d.campagne ? <><dt>Campagne</dt><dd>{d.campagne}{d.est_test ? ' (test)' : ''}</dd></> : null}
+              {d.landing ? <><dt>Page</dt><dd>/{d.landing}</dd></> : null}
+              {d.siren ? <><dt>SIREN</dt><dd>{d.siren}</dd></> : null}
             </dl>
             <h2>Message</h2>
             <p className="adm-msg">{d.message || <span className="adm-mute">Aucun message.</span>}</p>

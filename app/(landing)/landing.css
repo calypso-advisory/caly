@@ -1,0 +1,49 @@
+/* Pages de campagne : uniquement des ajustements. Toute la matière (couleurs, typographies, verre,
+   scènes, boutons) vient de site.css, qui n'est pas modifié. */
+
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+#faire-le-point,#reperes,#vos-donnees{scroll-margin-top:96px}
+
+/* En-tête réduit : le logo et un seul bouton, visible aussi sur mobile */
+.lp-hdr .menu-btn{display:none!important}
+.lp-hdr .nav{display:flex!important;position:static;flex-direction:row;align-items:center;padding:0;gap:0;background:none;border:0;border-radius:0;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.lp-hdr .nav .btn{margin:0!important}
+@media (max-width:480px){
+  .lp-hdr{gap:10px;padding-left:12px;padding-right:8px}
+  .lp-hdr .nav .btn{padding:0 15px;font-size:11px;letter-spacing:.06em;white-space:nowrap}
+  .lp-hdr .brand-name b{font-size:17px;letter-spacing:.24em}
+}
+
+/* Hero */
+.lp-hero .lead{max-width:54ch}
+.lp-hero .actions{margin-top:4px}
+
+/* Cartes d'identification */
+.lp-cards{align-items:stretch}
+.lp-cards .gcard{height:100%}
+@media (max-width:900px){ .lp-cards{grid-template-columns:1fr!important} }
+
+/* Formulaire : sur mobile il passe avant les explications */
+@media (max-width:900px){ .fp > .lp-form-wrap{order:-1} }
+.lp-form .err:empty{display:none}
+.lp-form fieldset{border:0;padding:0;margin:0;min-width:0;display:flex;flex-direction:column}
+.lp-form legend{padding:0;margin-bottom:6px;font-size:17px}
+.lp-collapsed .opt:not(:has(input:checked)){display:none}
+.lp-more{align-self:flex-start;margin-top:12px;min-height:44px;padding:0;background:none;border:0;border-bottom:1px solid rgba(216,201,168,.55);font:600 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--sand);cursor:pointer;transition:color .3s,border-color .3s}
+.lp-more:hover{color:var(--on-dark);border-color:var(--on-dark)}
+.lp-more:focus-visible{outline:2px solid var(--sea-2);outline-offset:3px;border-radius:6px}
+.lp-done{font-size:17px;line-height:1.65;color:var(--on-dark-2);max-width:46ch}
+
+/* Notice « Pourquoi ce message » */
+.lp-origin .micro{line-height:1.7;max-width:60ch}
+.lp-origin a{color:var(--on-dark);text-underline-offset:3px}
+
+/* Bandeau de consentement (affiché seulement si la mesure d'audience est activée) */
+.lp-consent{position:fixed;z-index:60;left:var(--gutter);right:var(--gutter);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);max-width:560px;margin-inline:auto;display:flex;flex-direction:column;gap:14px;padding:18px 20px;border-radius:18px;background:rgba(8,22,31,.86);border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);box-shadow:0 20px 50px -24px rgba(0,0,0,.55);color:var(--on-dark-2);font-size:14px;line-height:1.55}
+.lp-consent-actions{display:flex;gap:10px}
+.lp-consent-actions button{flex:1;min-height:44px;border-radius:999px;border:1px solid rgba(238,241,240,.5);background:transparent;color:var(--on-dark);font:600 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .3s,color .3s}
+.lp-consent-actions button:hover{background:var(--on-dark);color:var(--abyss)}
+.lp-consent-actions button:focus-visible{outline:2px solid var(--sea-2);outline-offset:3px}
+
+/* Mode test (?test=1) */
+.lp-test{position:fixed;z-index:70;left:50%;top:calc(env(safe-area-inset-top,0px) + 92px);transform:translateX(-50%);max-width:min(92vw,560px);padding:10px 16px;border-radius:12px;border:1px solid var(--sand);background:rgba(8,22,31,.9);color:var(--sand);font-size:13px;text-align:center}

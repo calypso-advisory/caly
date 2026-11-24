@@ -73,6 +73,17 @@ Envoyer une demande depuis `/faire-le-point`, puis ouvrir `/admin` et se connect
 - **Logo** : l'icône est un objet en trois dimensions (plaques d'or, de verre, de laque et de nacre) décrit dans `brand/icone.html`. Le site n'en affiche que des images déjà calculées : une bande de 31 vues inclinées pour l'en-tête et le pied de page (`public/brand/mark-sprite.webp`, animée au défilement par `app/(site)/MarkMotion.tsx`), les icônes d'application et l'image de partage. Pour les recalculer après une retouche : `node brand/render.js` (voir l'en-tête du fichier).
 - **Pistes suivantes** : articles et actualités gérés depuis `/admin`, prise de rendez-vous, espace client sécurisé pour l'échange de documents, lien avec Notariact.
 
+## Pages de campagne
+
+Pages courtes ouvertes depuis un SMS : `/rj`, `/options`, `/audience`, `/kbis`, et `/opposition` (« Ne plus être contacté »). Elles ne sont ni indexées ni listées dans le plan du site.
+
+- **Ajouter une page** : une entrée dans `content/landings.ts` (adresse, campagne, textes, situation pré-cochée). Rien d'autre à coder.
+- **Apparence** : mêmes feuilles de style et mêmes animations que le site (`app/(site)/site.css`, `public/legacy/site.js`, non modifiés). Les seuls ajouts sont dans `app/(landing)/landing.css`.
+- **Formulaire** : téléphone obligatoire, e-mail facultatif. Les demandes arrivent dans la même table et le même tableau de bord que celles du site, avec la campagne, la page et l'origine de la visite. Base : `supabase/migrations/0003_campagnes.sql` (à appliquer avant la mise en ligne).
+- **CRM** : si `CRM_WEBHOOK_URL` est renseignée, chaque demande et chaque opposition est transmise en JSON (`lib/crm.ts`). Un échec de transmission ne bloque jamais le visiteur : la demande reste dans `/admin`.
+- **Mesure** : les événements partent dans le `dataLayer` (`landing_view`, `button_click`, `form_start`, `form_error`, `lead_form_success`, `opposition_submitted`). Google Tag Manager ne se charge que si `NEXT_PUBLIC_GTM_ID` est renseigné, avec le consentement refusé par défaut et un bandeau pour accepter ou refuser.
+- **Essai sans effet** : ajouter `?test=1` à l'adresse. La demande est enregistrée comme un essai, sans alerte e-mail ni transmission au CRM.
+
 ## Structure
 
 ```
