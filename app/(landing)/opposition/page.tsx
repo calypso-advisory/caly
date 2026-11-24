@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import OppositionForm from '../OppositionForm';
+import { EDITEUR } from '@/content/legal';
 
 export const metadata: Metadata = {
   title: 'Ne plus être contacté',
@@ -23,6 +24,7 @@ export default function Page() {
           <div className="stack-lg">
             <p className="lead" data-reveal="">Indiquez le numéro concerné. Il sera retiré de nos envois. Vous pouvez aussi répondre STOP au SMS reçu.</p>
             <p className="micro" data-reveal="">Pour connaître l'origine de vos données ou les faire supprimer, écrivez à audit@calypso-advisory.com.</p>
+            <p className="micro" data-reveal="">{EDITEUR.marque} est une marque exploitée par {EDITEUR.denomination} ({EDITEUR.forme}, Stockholm). <a href="/mentions-legales">Mentions légales</a>.</p>
           </div>
           <div className="lp-form-wrap" data-reveal="scale">
             <OppositionForm />

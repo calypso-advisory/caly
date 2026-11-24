@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 import { notFound } from 'next/navigation';
 import { landings, landingById, COMMON } from '@/content/landings';
 import LandingForm from '../LandingForm';
+import { EDITEUR } from '@/content/legal';
 
 /* Une page par campagne, générée depuis content/landings.ts.
    Structure : hero sombre, scène des deux panneaux, bande claire d'identification,
@@ -139,6 +140,7 @@ export default async function Page({ params }: Props) {
             <div className="stack lp-origin" id="vos-donnees" data-reveal="">
               <div className="eyebrow">Pourquoi ce message</div>
               <p className="micro">{l.origin} {COMMON.originRest} <a href="/opposition">Ne plus être contacté</a>.</p>
+              <p className="micro">{EDITEUR.marque} est une marque exploitée par {EDITEUR.denomination} ({EDITEUR.forme}, Stockholm). <a href="/mentions-legales">Mentions légales</a>.</p>
             </div>
           </div>
           <div className="lp-form-wrap" data-reveal="scale">
